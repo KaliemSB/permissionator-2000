@@ -24,13 +24,17 @@ export const createPermissions = async () => {
       })),
   });
 
+  if (p.isCancel(schemaOption)) {
+    process.exit(0);
+  }
+
   const {
     data: { result: tableResult },
   } = await getHttpClient().post<{ result: string[][] }>("/v2/query", {
     type: "run_sql",
     args: {
       source: "default",
-      sql: `SELECT distinct table_name FROM information_schema.columns where table_schema = '${schemaOption.toString()}';`,
+      sql: `SELECT distinct table_name FROM information_schema.columns where table_schema = '${schemaOption}';`,
       cascade: false,
       read_only: true,
     },
@@ -47,13 +51,17 @@ export const createPermissions = async () => {
       })),
   });
 
+  if (p.isCancel(tableOption)) {
+    process.exit(0);
+  }
+
   const {
     data: { result: columnResult },
   } = await getHttpClient().post<{ result: string[][] }>("/v2/query", {
     type: "run_sql",
     args: {
       source: "default",
-      sql: `SELECT column_name FROM information_schema.columns WHERE table_schema = '${schemaOption.toString()}' AND table_name = '${tableOption.toString()}';`,
+      sql: `SELECT column_name FROM information_schema.columns WHERE table_schema = '${schemaOption}' AND table_name = '${tableOption}';`,
       cascade: false,
       read_only: true,
     },
@@ -61,12 +69,16 @@ export const createPermissions = async () => {
 
   const allColumns = columnResult.flat().slice(1);
 
-  const colmunsOptions = await p.multiselect({
+  const columnsOptions = await p.multiselect({
     message: "Pick some columns.",
     options: allColumns.map((item) => ({
       value: item,
     })),
   });
+
+  if (p.isCancel(columnsOptions)) {
+    process.exit(0);
+  }
 
   const permTypeOption = await p.select({
     message: "Pick the permission type.",
@@ -90,6 +102,10 @@ export const createPermissions = async () => {
     ],
   });
 
+  if (p.isCancel(permTypeOption)) {
+    process.exit(0);
+  }
+
   const allRoles = await getHttpClient()
     .post<{ result: string[][] }>("/v2/query", {
       type: "run_sql",
@@ -110,6 +126,10 @@ export const createPermissions = async () => {
     })),
   });
 
+  if (p.isCancel(roleOption)) {
+    process.exit(0);
+  }
+
   const {
     data: { metadata },
   } = await getHttpClient().post("/v1/metadata", {
@@ -119,16 +139,15 @@ export const createPermissions = async () => {
   });
 
   const index = metadata.sources[0].tables.findIndex(
-    (item: { table: { name: string } }) =>
-      item.table.name === tableOption.toString()
+    (item: { table: { name: string } }) => item.table.name === tableOption
   );
 
-  let permsArray = (roleOption as Array<string>).map((item) => ({
+  let permsArray = roleOption.map((item) => ({
     role: item,
     permission: {
-      columns: colmunsOptions,
+      columns: columnsOptions,
       filter: {},
-      ...(permTypeOption.toString() === "update_permissions" && {
+      ...(permTypeOption === "update_permissions" && {
         check: {},
       }),
     },
@@ -137,7 +156,7 @@ export const createPermissions = async () => {
 
   const newMetadata = metadata;
 
-  newMetadata.sources[0].tables[index][permTypeOption.toString()] = permsArray;
+  newMetadata.sources[0].tables[index][permTypeOption] = permsArray;
 
   Bun.write("out.json", JSON.stringify(newMetadata, null, 2));
 };

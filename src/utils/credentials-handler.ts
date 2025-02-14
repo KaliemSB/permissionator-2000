@@ -1,4 +1,4 @@
-import { text } from "@clack/prompts";
+import { isCancel, text } from "@clack/prompts";
 import envPaths from "env-paths";
 import { errAsync, ResultAsync } from "neverthrow";
 import { mkdir } from "node:fs/promises";
@@ -43,7 +43,7 @@ const getConfigFile = async () => {
   >(() => Bun.file(configFilePath).json())();
 
   if (configJson.isErr()) {
-    await Bun.write(configFilePath, JSON.stringify({}));
+    await Bun.write(configFilePath, JSON.stringify([]));
 
     return [] as Array<Enviroment>;
   }
@@ -77,15 +77,23 @@ export const credentialsHandler = async (enviromentName: string) => {
       },
     });
 
+    if (isCancel(base_url)) {
+      process.exit(0);
+    }
+
     const admin_secret = await text({
       message: "Hasura admin secret?",
     });
 
+    if (isCancel(admin_secret)) {
+      process.exit(0);
+    }
+
     selectedEnviroment = new Enviroment({
       name: enviromentName,
       credentials: {
-        admin_secret: admin_secret.toString(),
-        base_url: base_url.toString(),
+        admin_secret: admin_secret,
+        base_url: base_url,
       },
     });
 
