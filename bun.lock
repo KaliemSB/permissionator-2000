@@ -5,6 +5,7 @@
       "name": "metadata-editor",
       "dependencies": {
         "@clack/prompts": "^0.10.0",
+        "commander": "^13.1.0",
         "picocolors": "^1.1.1",
         "xior": "^0.6.3",
       },
@@ -28,6 +29,8 @@
     "@types/ws": ["@types/ws@8.5.14", "", { "dependencies": { "@types/node": "*" } }, "sha512-bd/YFLW+URhBzMXurx7lWByOu+xzU9+kb3RboOteXYDfW+tr+JZa99OyNmPINEGB/ahzKrEuc8rcv4gnpJmxTw=="],
 
     "bun-types": ["bun-types@1.2.2", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-RCbMH5elr9gjgDGDhkTTugA21XtJAy/9jkKe/G3WR2q17VPGhcquf9Sir6uay9iW+7P/BV0CAHA1XlHXMAVKHg=="],
+
+    "commander": ["commander@13.1.0", "", {}, "sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw=="],
 
     "picocolors": ["picocolors@1.1.1", "", {}, "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="],
 
