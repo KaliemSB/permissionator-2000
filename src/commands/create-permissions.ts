@@ -1,11 +1,10 @@
-import { client } from "@/http";
-import color from "picocolors";
 import * as p from "@clack/prompts";
+import { getHttpClient } from "@/http";
 
 export const createPermissions = async () => {
   const {
     data: { result: schemaResult },
-  } = await client.post<{ result: string[][] }>("/v2/query", {
+  } = await getHttpClient().post<{ result: string[][] }>("/v2/query", {
     type: "run_sql",
     args: {
       source: "default",
@@ -14,8 +13,6 @@ export const createPermissions = async () => {
       read_only: true,
     },
   });
-
-  p.intro(`${color.bgRedBright(" Permissionator 2000 ")}`);
 
   const schemaOption = await p.select({
     message: "Pick a schema.",
@@ -29,7 +26,7 @@ export const createPermissions = async () => {
 
   const {
     data: { result: tableResult },
-  } = await client.post<{ result: string[][] }>("/v2/query", {
+  } = await getHttpClient().post<{ result: string[][] }>("/v2/query", {
     type: "run_sql",
     args: {
       source: "default",
@@ -52,7 +49,7 @@ export const createPermissions = async () => {
 
   const {
     data: { result: columnResult },
-  } = await client.post<{ result: string[][] }>("/v2/query", {
+  } = await getHttpClient().post<{ result: string[][] }>("/v2/query", {
     type: "run_sql",
     args: {
       source: "default",
@@ -66,15 +63,9 @@ export const createPermissions = async () => {
 
   const colmunsOptions = await p.multiselect({
     message: "Pick some columns.",
-    options: [
-      {
-        label: "Select all",
-        value: "select all",
-      },
-      ...allColumns.map((item) => ({
-        value: item,
-      })),
-    ],
+    options: allColumns.map((item) => ({
+      value: item,
+    })),
   });
 
   const permTypeOption = await p.select({
@@ -99,7 +90,7 @@ export const createPermissions = async () => {
     ],
   });
 
-  const allRoles = await client
+  const allRoles = await getHttpClient()
     .post<{ result: string[][] }>("/v2/query", {
       type: "run_sql",
       args: {
@@ -113,21 +104,15 @@ export const createPermissions = async () => {
 
   const roleOption = await p.multiselect({
     message: "Pick some roles.",
-    options: [
-      {
-        label: "Select all",
-        value: "select all",
-      },
-      ...allRoles.map((item) => ({
-        value: item,
-        label: item,
-      })),
-    ],
+    options: allRoles.map((item) => ({
+      value: item,
+      label: item,
+    })),
   });
 
   const {
     data: { metadata },
-  } = await client.post("/v1/metadata", {
+  } = await getHttpClient().post("/v1/metadata", {
     type: "export_metadata",
     version: 2,
     args: {},
@@ -138,17 +123,14 @@ export const createPermissions = async () => {
       item.table.name === tableOption.toString()
   );
 
-  const rolesArray = (
-    (roleOption as string[]).includes("select all") ? allRoles : colmunsOptions
-  ) as Array<string>;
-
-  const permsArray = rolesArray.map((item) => ({
+  let permsArray = (roleOption as Array<string>).map((item) => ({
     role: item,
     permission: {
-      columns: (colmunsOptions as Array<string>).includes("select all")
-        ? allColumns
-        : colmunsOptions,
+      columns: colmunsOptions,
       filter: {},
+      ...(permTypeOption.toString() === "update_permissions" && {
+        check: {},
+      }),
     },
     comment: "",
   }));

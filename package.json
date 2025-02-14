@@ -11,6 +11,8 @@
   "dependencies": {
     "@clack/prompts": "^0.10.0",
     "commander": "^13.1.0",
+    "env-paths": "^3.0.0",
+    "neverthrow": "^8.1.1",
     "picocolors": "^1.1.1",
     "xior": "^0.6.3"
   }
