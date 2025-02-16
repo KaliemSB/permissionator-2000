@@ -88,17 +88,7 @@ export class EnviromentManager {
 			process.exit(1);
 		}
 
-		const safeValidate = fromAsyncThrowable<[object], void, Error>(validateOrReject);
-
-		const validateResult = await safeValidate(enviroment).mapErr((err) => {
-			if (Array.isArray(err)) {
-				if (err.at(0) instanceof ValidationError) {
-					return new VALIDATION_ERROR_EXCEPTION(getAllConstraints(err).join("\n"));
-				}
-			}
-
-			return new UNEXPECTED_ERROR_EXCEPTION();
-		});
+		const validateResult = await safeValidate(enviroment);
 
 		if (validateResult.isErr()) {
 			console.error("Enviroment is invalid");
