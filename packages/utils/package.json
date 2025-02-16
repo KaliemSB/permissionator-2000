@@ -1,0 +1,16 @@
+{
+	"name": "@permissionator-2000/utils",
+	"module": "index.ts",
+	"type": "module",
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"class-validator": "^0.14.1",
+		"neverthrow": "^8.1.1",
+		"@permissionator-2000/exceptions": "workspace:*"
+	}
+}

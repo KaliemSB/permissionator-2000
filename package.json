@@ -1,19 +1,29 @@
 {
-  "name": "permissionator-2000",
-  "module": "index.ts",
-  "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@clack/prompts": "^0.10.0",
-    "commander": "^13.1.0",
-    "env-paths": "^3.0.0",
-    "neverthrow": "^8.1.1",
-    "picocolors": "^1.1.1",
-    "xior": "^0.6.3"
-  }
+	"name": "permissionator-2000",
+	"module": "index.ts",
+	"workspaces": [
+		"packages/*"
+	],
+	"type": "module",
+	"scripts": {
+		"lint": "eslint . --fix && prettier --write ."
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.20.0",
+		"@types/bun": "latest",
+		"eslint": "^9.20.1",
+		"eslint-config-prettier": "^10.0.1",
+		"globals": "^15.15.0",
+		"prettier": "^3.5.1",
+		"typescript-eslint": "^8.24.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@permissionator-2000/cli": "workspace:*",
+		"@permissionator-2000/enviroment": "workspace:*",
+		"@permissionator-2000/exceptions": "workspace:*",
+		"@permissionator-2000/utils": "workspace:*"
+	}
 }

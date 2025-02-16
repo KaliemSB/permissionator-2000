@@ -1,5 +1,8 @@
 {
 	"compilerOptions": {
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+
 		// Enable latest features
 		"lib": ["ESNext", "DOM"],
 		"target": "ESNext",
@@ -23,10 +26,11 @@
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 		"noPropertyAccessFromIndexSignature": false,
+		"strictPropertyInitialization": false,
+		"noUncheckedIndexedAccess": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
-		},
-		"strictPropertyInitialization": false
+			"@/*": ["src/*"]
+		}
 	}
 }

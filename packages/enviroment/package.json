@@ -1,0 +1,20 @@
+{
+	"name": "@permissionator-2000/enviroment",
+	"module": "src/index.ts",
+	"type": "module",
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@permissionator-2000/exceptions": "workspace:*",
+		"@permissionator-2000/utils": "workspace:*",
+		"class-transformer": "^0.5.1",
+		"class-validator": "^0.14.1",
+		"env-paths": "^3.0.0",
+		"neverthrow": "^8.1.1",
+		"reflect-metadata": "^0.2.2"
+	}
+}
