@@ -2,10 +2,10 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "metadata-editor",
+      "name": "permissionator-2000",
       "dependencies": {
         "@permissionator-2000/cli": "workspace:*",
-        "@permissionator-2000/enviroment": "workspace:*",
+        "@permissionator-2000/environment": "workspace:*",
         "@permissionator-2000/exceptions": "workspace:*",
         "@permissionator-2000/utils": "workspace:*",
       },
@@ -24,6 +24,11 @@
     },
     "packages/cli": {
       "name": "@permissionator-2000/cli",
+      "dependencies": {
+        "@commander-js/extra-typings": "^13.1.0",
+        "@permissionator-2000/environment": "workspace:*",
+        "commander": "^13.1.0",
+      },
       "devDependencies": {
         "@types/bun": "latest",
       },
@@ -31,8 +36,8 @@
         "typescript": "^5.0.0",
       },
     },
-    "packages/enviroment": {
-      "name": "@permissionator-2000/enviroment",
+    "packages/environment": {
+      "name": "@permissionator-2000/environment",
       "dependencies": {
         "@permissionator-2000/exceptions": "workspace:*",
         "@permissionator-2000/utils": "workspace:*",
@@ -74,6 +79,8 @@
     },
   },
   "packages": {
+    "@commander-js/extra-typings": ["@commander-js/extra-typings@13.1.0", "", { "peerDependencies": { "commander": "~13.1.0" } }, "sha512-q5P52BYb1hwVWE6dtID7VvuJWrlfbCv4klj7BjUUOqMz4jbSZD4C9fJ9lRjL2jnBGTg+gDDlaXN51rkWcLk4fg=="],
+
     "@eslint-community/eslint-utils": ["@eslint-community/eslint-utils@4.4.1", "", { "dependencies": { "eslint-visitor-keys": "^3.4.3" }, "peerDependencies": { "eslint": "^6.0.0 || ^7.0.0 || >=8.0.0" } }, "sha512-s3O3waFUrMV8P/XaF/+ZTp1X9XBZW1a4B97ZnjQF2KYWaFD2A8KyFBsrsfSjEmjn3RGWAIuvlneuZm3CUK3jbA=="],
 
     "@eslint-community/regexpp": ["@eslint-community/regexpp@4.12.1", "", {}, "sha512-CCZCDJuduB9OUkFkY2IgppNZMi2lBQgD2qzwXkEia16cge2pijY/aXi96CJMquDMn3nJdlPV1A5KrJEXwfLNzQ=="],
@@ -106,7 +113,7 @@
 
     "@permissionator-2000/cli": ["@permissionator-2000/cli@workspace:packages/cli"],
 
-    "@permissionator-2000/enviroment": ["@permissionator-2000/enviroment@workspace:packages/enviroment"],
+    "@permissionator-2000/environment": ["@permissionator-2000/environment@workspace:packages/environment"],
 
     "@permissionator-2000/exceptions": ["@permissionator-2000/exceptions@workspace:packages/exceptions"],
 
@@ -171,6 +178,8 @@
     "color-convert": ["color-convert@2.0.1", "", { "dependencies": { "color-name": "~1.1.4" } }, "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ=="],
 
     "color-name": ["color-name@1.1.4", "", {}, "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA=="],
+
+    "commander": ["commander@13.1.0", "", {}, "sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw=="],
 
     "concat-map": ["concat-map@0.0.1", "", {}, "sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg=="],
 
@@ -256,7 +265,7 @@
 
     "levn": ["levn@0.4.1", "", { "dependencies": { "prelude-ls": "^1.2.1", "type-check": "~0.4.0" } }, "sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ=="],
 
-    "libphonenumber-js": ["libphonenumber-js@1.11.19", "", {}, "sha512-bW/Yp/9dod6fmyR+XqSUL1N5JE7QRxQ3KrBIbYS1FTv32e5i3SEtQVX+71CYNv8maWNSOgnlCoNp9X78f/cKiA=="],
+    "libphonenumber-js": ["libphonenumber-js@1.11.20", "", {}, "sha512-/ipwAMvtSZRdiQBHqW1qxqeYiBMzncOQLVA+62MWYr7N4m7Q2jqpJ0WgT7zlOEOpyLRSqrMXidbJpC0J77AaKA=="],
 
     "locate-path": ["locate-path@6.0.0", "", { "dependencies": { "p-locate": "^5.0.0" } }, "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw=="],
 

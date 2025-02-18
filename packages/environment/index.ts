@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Enviroment } from "@/entities";
+import { Environment } from "entities";
 import {
 	ALREADY_EXISTS_EXCEPTION,
 	NOT_FOUND_EXCEPTION,
@@ -11,7 +11,7 @@ import envPaths from "env-paths";
 import { err, fromAsyncThrowable, ok } from "neverthrow";
 import { mkdir, readdir } from "node:fs/promises";
 
-export class EnviromentManager {
+export class EnvironmentManager {
 	configPath = envPaths("permissionator-2000", {
 		suffix: "",
 	}).config;
@@ -66,37 +66,37 @@ export class EnviromentManager {
 			process.exit(1);
 		}
 
-		const enviroments: Array<Enviroment> = [];
+		const enviroments: Array<Environment> = [];
 
 		for (const file of configFiles.value) {
 			const fileData: object = await this.readFileWithConfigPath(file);
-			enviroments.push(plainToInstance(Enviroment, fileData));
+			enviroments.push(plainToInstance(Environment, fileData));
 		}
 
 		return enviroments;
 	}
 
-	async getEnviroment(name: string) {
-		const enviroments = await this.getAllEnviroments();
+	async getEnvironment(name: string) {
+		const environments = await this.getAllEnviroments();
 
-		const enviroment = enviroments.find((env) => env.name === name);
+		const environment = environments.find((env) => env.name === name);
 
-		if (!enviroment) {
-			console.error(new NOT_FOUND_EXCEPTION("Enviroment").message);
+		if (!environment) {
+			console.error(new NOT_FOUND_EXCEPTION("Environment").message);
 			process.exit(1);
 		}
 
-		const validateResult = await safeValidate(enviroment);
+		const validateResult = await safeValidate(environment);
 
 		if (validateResult.isErr()) {
-			console.error("Enviroment is invalid");
+			console.error("Environment is invalid");
 			process.exit(1);
 		}
 
-		return enviroment;
+		return environment;
 	}
 
-	async createEnviroment(param: Enviroment) {
+	async createEnvironment(param: Environment) {
 		const enviroments = await this.getAllEnviroments();
 
 		if (enviroments.find((env) => env.name === param.name)) {
@@ -104,21 +104,21 @@ export class EnviromentManager {
 			process.exit(1);
 		}
 
-		const newEnviroment = plainToInstance(Enviroment, param);
+		const newEnvironment = plainToInstance(Environment, param);
 
-		const validateResult = await safeValidate(newEnviroment);
+		const validateResult = await safeValidate(newEnvironment);
 
 		if (validateResult.isErr()) {
 			console.error(validateResult.error.message);
 			process.exit(1);
 		}
 
-		await this.writeFileWithConfigPath(`${param.name}.json`, JSON.stringify(newEnviroment));
+		await this.writeFileWithConfigPath(`${param.name}.json`, JSON.stringify(newEnvironment));
 
-		return newEnviroment;
+		return newEnvironment;
 	}
 
-	async deleteEnviroment(name: string) {
+	async deleteEnvironment(name: string) {
 		const enviroments = await this.getAllEnviroments();
 
 		const enviroment = enviroments.find((env) => env.name === name);

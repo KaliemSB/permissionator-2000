@@ -1,6 +1,6 @@
 {
-	"name": "@permissionator-2000/enviroment",
-	"module": "src/index.ts",
+	"name": "@permissionator-2000/environment",
+	"module": "index.ts",
 	"type": "module",
 	"devDependencies": {
 		"@types/bun": "latest"

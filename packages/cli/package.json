@@ -7,5 +7,10 @@
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@commander-js/extra-typings": "^13.1.0",
+		"commander": "^13.1.0",
+		"@permissionator-2000/environment": "workspace:*"
 	}
 }

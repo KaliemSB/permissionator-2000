@@ -22,7 +22,7 @@
 	},
 	"dependencies": {
 		"@permissionator-2000/cli": "workspace:*",
-		"@permissionator-2000/enviroment": "workspace:*",
+		"@permissionator-2000/environment": "workspace:*",
 		"@permissionator-2000/exceptions": "workspace:*",
 		"@permissionator-2000/utils": "workspace:*"
 	}

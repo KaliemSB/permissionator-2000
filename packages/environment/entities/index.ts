@@ -1,2 +1,2 @@
 export * from "./credentials";
-export * from "./enviroment";
+export * from "./environment";
